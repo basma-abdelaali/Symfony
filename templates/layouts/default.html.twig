@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+
+<html>
+	{% include '_includes/head.html.twig' %}
+	{% include '_includes/navbar.html.twig' %}
+	<header class="masthead">
+		<div class="overlay"></div>
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-8 col-md-10 mx-auto">
+					<div class="page-heading">
+						{% if app.request.attributes.get('_route') == 'blog' %}
+							<h1>{{ blog.title }}</h1>
+							<span class="subheading">{{ blog.description }}</span>
+							<span class="meta">Posted by
+								<a href="/user/{{blog.author.id}}">
+									{{blog.author.username}}
+								</a>
+								on
+								{{ blog.date |  date('Y-m-d') }}
+								&middot;
+							</span>
+							{% if app.user %}
+								{# {% if likes %} #}
+								<form action="/like/{{app.user.id}}/{{blog.id}}" method="post">
+									<div style="margin-top:50px;">
+										{% if liked > 0 %}
+											<button type="submit" class="btn btn-outline-primary" style="display:inline-block" disabled>Liked</button>
+										{% else %}
+											<button type="submit" class="btn btn-outline-primary" style="display:inline-block">Like</button>
+										{% endif %}
+										<span class="subheading" style="display:inline-block">{{ likes }}
+											Likes</span>
+									</div>
+								</form>
+								{# {% endif %} #}
+							{% endif %}
+
+						{% elseif app.request.attributes.get('_route') == 'home' %}
+							<h1>All blogs</h1>
+							<span class="subheading">Have fun when reading blogs.</span>
+						{% elseif app.request.attributes.get('_route') == 'add_blog' %}
+							<h1>Add new blog</h1>
+							<span class="subheading">Share your story-activity-content ... with others by adding a new blog</span>
+						{% elseif app.request.attributes.get('_route') == 'app_login' %}
+							<h1>Login</h1>
+							<span class="subheading">Do you want to post a blog, all you have to do is just login it's all yours</span>
+						{% elseif app.request.attributes.get('_route') == 'user_registration' %}
+							<h1>Register</h1>
+							<span class="subheading">First time ! register so you can post a blog</span>
+						{% endif %}
+					</div>
+				</div>
+			</div>
+		</div>
+	</header>
+	<body>
+
+
+		{% block content %}{% endblock %}
+
+	</body>
+	{% include '_includes/footer.html.twig' %}
+
+	{% block javascripts %}
+		{{ encore_entry_script_tags('app') }}
+	{% endblock %}
+
+</html>

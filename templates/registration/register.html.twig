@@ -1,0 +1,33 @@
+{% extends 'layouts/default.html.twig' %}
+{% block content %}
+	{{ form_start(form) }}
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-8 col-md-10 mx-auto">
+				<p>Want to get in touch? Register now!!</p>
+				<form name="sentMessage" id="contactForm" novalidate="">
+					<div class="control-group">
+						<div class="form-group floating-label-form-group controls">
+							<label>Username</label>
+							{{ form_row(form.username,{'attr': {'class': 'form-control', 'placeholder': 'Username'}}) }}
+							<p class="help-block text-danger"></p>
+						</div>
+					</div>
+					<div class="control-group">
+						<div class="form-group floating-label-form-group controls">
+							<label>password</label>
+							{{ form_row(form.password,{'attr': {'class': 'form-control', 'placeholder': 'Password'}}) }}
+							<p class="help-block text-danger"></p>
+						</div>
+					</div>
+					<br>
+					<div id="success"></div>
+					<div class="form-group">
+						<button type="submit" class="btn btn-primary">Register!</button>
+					</div>
+					{{ form_end(form) }}
+				</form>
+			</div>
+		</div>
+	</div>
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends 'layouts/default.html.twig' %}
+{% block content %}
+	<div class="container">
+		<div class="row">
+			{% if app.user %}
+				<div class="clearfix">
+					<a class="btn btn-primary float-right" href="{{"/add_blog" }}">Create blog</a>
+				</div>
+			{% endif %}
+			<div class="col-lg-8 col-md-10 mx-auto">
+				{% if blogs|length > 0 %}
+					{% for blog in blogs %}
+						<!-- Home Post List -->
+						<article class="post-preview">
+							<a href="blog/{{blog.id}}">
+								<h2 class="post-title">{{ blog.title }}</h2>
+								{% if blog.description %}
+									<h3 class="post-subtitle">{{ blog.description }}</h3>
+								{% endif %}
+							</a>
+							<p class="post-meta">Posted by
+								{% if blog.author %}
+									{{ blog.author.username }}
+								{% else %}
+									{{ blog.author }}
+								{% endif %}
+								on
+								{{ blog.date | date('Y-m-d') }}
+							</p>
+						</article>
+					{% endfor %}
+          <hr>
+          {% else %}
+          <p>There is no blogs right now, be the first one and share your blog now !</p>
+				{% endif %}
+			</div>
+		</div>
+	</div>
+{% endblock %}

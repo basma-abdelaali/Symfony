@@ -1,0 +1,49 @@
+{% extends 'layouts/default.html.twig' %}
+{% block content %}
+	<div class="container">
+		<div class="row">
+			{% if app.user %}
+				{% if app.user.id == blog.author.id %}
+					<div class="clearfix">
+						<a class="btn btn-primary float-right" href="/delete_blog/{{blog.id}}">Delete blog</a>
+					</div>
+				{% endif %}
+			{% endif %}
+			<div class="col-lg-8 col-md-10 mx-auto">
+				{{ blog.text }}
+				<hr>
+				{% if comments|length > 0 %}
+					<h5>Comments</h5>
+					{% for comment in comments %}
+						<div class="card" style="margin-bottom:10px;">
+							<div class="card-body">
+								<blockquote class="blockquote mb-0">
+									<p style="margin:0px">{{ comment[0].comment }}</p>
+									<footer class="blockquote-footer" style="padding:0px">Created by
+										<cite title="Source Title"><a href="/user/{{comment['id']}}">{{ comment['username'] }}</a></cite>
+									</footer>
+								</blockquote>
+							</div>
+						</div>
+					{% endfor %}
+				{% endif %}
+				<hr>
+				{% if app.user %}
+					{{ form_start(form.form) }}
+					<label>Add comment</label>
+					<form name="commentForm" id="commentform" novalidate="">
+						<div class="form-group floating-label-form-group controls">
+							<label>comment</label>
+							{{ form_row(form.form.comment,{'attr': {'class': 'form-control', 'placeholder': 'Your comment here...', 'rows':'5'}}) }}
+							<p class="help-block text-danger"></p>
+							<div class="clearfix">
+								<button type="submit" class="btn btn-primary">Comment</button>
+							</div>
+						</div>
+						{{ form_end(form.form) }}
+					</form>
+				{% endif %}
+			</div>
+		</div>
+	</div>
+{% endblock %}
